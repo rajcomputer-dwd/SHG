@@ -1,0 +1,154 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Home Page</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lato">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<style>
+body,h1,h2,h3,h4,h5,h6 {font-family: "Lato", sans-serif}
+.w3-bar,h1,button {font-family: "Montserrat", sans-serif}
+.fa-anchor,.fa-coffee {font-size:200px}
+
+/* Footer styles */
+/* Set the position and height of the footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 50px;
+  background-color: #000000;
+  text-align: center;
+  margin: auto;
+  padding-top: 15px;
+  color: #ebe9e9;
+}
+
+
+/* css for the drop down navigation start */
+ 
+.dropdown {
+  float: left;
+  overflow: hidden;
+}
+
+.dropdown .dropbtn {
+  font-size: 16px;  
+  border: none;
+  outline: none;
+  color: white;
+  padding: 14px 16px;
+  background-color: inherit;
+  font-family: inherit;
+  margin: 0;
+}
+
+.navbar a:hover, .dropdown:hover .dropbtn {
+  background-color: red;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #f9f9f9;
+  min-width: 160px;
+  box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: black;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+/* css for the drop down navigation end */
+
+ /* css for the sub menu drop-down menu start */
+ .dropdown-submenu {
+      position: relative;
+    }
+
+    .dropdown-submenu-content {
+      display: none;
+      position: absolute;
+      top: 0;
+      left: 100%;
+      min-width: 200px;
+      z-index: 1;
+      background-color: rgb(255, 255, 255);
+    }
+
+    .dropdown-submenu:hover > .dropdown-submenu-content {
+     display: block;
+    }
+
+    .dropdown-submenu-content a {
+      padding-left: 20px;
+    }
+
+    
+    /* css for the sub menu drop-down menu end */
+
+</style>
+</head>
+<body>
+
+
+<!-- Navbar -->
+<div class="w3-top">
+  <div class="w3-bar w3-red w3-card w3-left-align w3-large">
+    <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-red" href="javascript:void(0);" onclick="myFunction()" title="Toggle Navigation Menu"><i class="fa fa-bars"></i></a>
+    <a href="#" class="w3-bar-item w3-button w3-padding-large w3-white">Home</a>
+    <div class="w3-dropdown-hover w3-padding-small w3-bar-item w3-button">
+        <button class="w3-button" title="Notifications">New<i class="fa fa-caret-down"></i></button>     
+        <div class="w3-dropdown-content w3-card-4 w3-bar-block">
+          <a href="{% url 'create_branch_view' %}" class="w3-bar-item w3-button">Branch</a>
+          <a href="{% url 'create_society_view' %}" class="w3-bar-item w3-button">Society</a>
+          <a href="{% url 'shg_details_bank_form' %}" class="w3-bar-item w3-button">SHG Bank</a>
+          <a href="{% url 'shg_details_society_form' %}" class="w3-bar-item w3-button">SHG Society</a>
+        </div>
+    </div>
+  <div class="w3-dropdown-hover w3-padding-small w3-bar-item w3-button">
+    <button class="w3-button" title="Notifications">Transaction  <i class="fa fa-caret-down"></i></button>     
+    <div class="w3-dropdown-content w3-card-4 w3-bar-block">
+      <a href="{% url 'create_shgtransaction_bank' %}" class="w3-bar-item w3-button">SHG Bank</a>
+      <a href="{% url 'create_shgtransaction_society' %}" class="w3-bar-item w3-button">SHG Society </a>
+    </div>
+</div>  
+  </div>
+ 
+
+  {% load static %}
+  <style>
+  body {
+    background-image: url('https://vajiramandravi.s3.us-east-1.amazonaws.com/media/2020/3/9/9/33/26/women_SHGs.jpg');
+      /*background-size: cover;*/
+    background-size:100% 95vh;
+      
+      /* other background properties */
+  }
+  </style>
+
+  <!-- Footer section -->
+  <!-- Footer -->
+<footer>
+    Developed By Naveen N Wali | Contact Number: 9110885676 | Email ID: naveenwali34@gmail.com
+</footer>
+</body>
+</html>

@@ -1,0 +1,210 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHG Transaction Society</title>
+  <style>
+    /* CSS for the form and table */
+    h1 {
+          font-size: 24px;
+          margin-bottom: 40px;
+          margin-left: 15px;
+          margin-top: 35px;
+          text-align: center;
+        }
+      
+        form {
+          width: 1500px;
+          margin-top: 50px;
+          margin-left: auto;
+          margin-right: auto;
+          text-align: center;
+        }
+      
+        .form-group {
+          display: flex;
+          flex-wrap: wrap;
+          margin-bottom: 15px;
+        }
+      
+        .form-group > .form-group {
+          width: calc(33.33% - 25px); /* Adjust the width to fit three labels per line */
+          margin-right: 25px;
+        }
+      
+        label {
+          display: block;
+          margin-bottom: 10px;
+          margin-left: 30px;
+          font-size: 22px;
+          text-align: center;
+        }
+      
+        input,
+        select
+      {
+          width: 100%;
+          padding: 10px;
+          margin-bottom: 15px;
+          border: 1px solid #940c0c;
+          border-radius: 4px;
+          box-sizing: border-box;
+          margin-left: 30px;
+          font-size: 20px;
+          text-align: center;
+        }
+      
+        .select-wrapper {
+          position: relative;
+        }
+      
+        .select-wrapper select {
+          appearance: none;
+          -webkit-appearance: none;
+          -moz-appearance: none;
+          width: 100%;
+          height: 100%;
+          cursor: pointer;
+        }
+      
+        .select-wrapper::after {
+          content: "\25BC";
+          position: absolute;
+          top: 50%;
+          right: 10px;
+          transform: translateY(-50%);
+          pointer-events: none;
+        }
+      
+        .text-danger {
+          color: red;
+        }
+      
+        button[type="submit" ] {
+        width: 50%;
+        padding: 10px;
+        background-color: #4CAF50;
+        color: white;
+        cursor: pointer;
+        font-size: 20px;
+        text-align: center;
+        margin: 0 auto; /* Add this to center the button horizontally */
+        display: block; /* Add this to make the button behave as a block element */
+        
+      }
+
+
+    
+        button[type="submit"]:hover {
+        background-color: #4f55d1;
+        }
+  
+  </style>
+</head>
+<body>
+    <h1>SHG Transaction Society </h1>
+<form method="post">
+    {% csrf_token %}
+    <div class="form-group">
+      <div class="form-group col-md-4">
+        <label for="id_society_name">Society name:</label>
+        {{form.society_name}}
+      </div>
+      <div class="form-group col-md-4">
+        <label for="id_taluka">Taluka:</label>
+        <input type="text" name="taluka" maxlength="255" required id="id_taluka">
+      </div> 
+      <div class="form-group col-md-4">
+        <label for="id_group_name">Group name:</label>
+        <select name="group_name" id="id_group_name"></select>
+      </div> 
+    </div> 
+    <div class="form-group">
+      <div class="form-group col-md-4">
+        <label for="id_date_of_advance">Date of advance:</label>
+        <input type="date" name="date_of_advance" required id="id_date_of_advance">
+      </div> 
+      <div class="form-group col-md-4">
+        <label for="id_loan_amt">Loan amt:</label>
+        <input type="number" name="loan_amt" min="-9223372036854775808" max="9223372036854775807" required id="id_loan_amt">
+      </div>  
+      <div class="form-group col-md-4">
+        <label for="id_opeaning_outstanding_amt">Opeaning outstanding amt:</label>
+        <input type="number" name="opeaning_outstanding_amt" min="-9223372036854775808" max="9223372036854775807" required id="id_opeaning_outstanding_amt">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group col-md-4">
+        <label for="id_recovery_period_from">Recovery period from:</label>
+        <input type="date" name="recovery_period_from" required id="id_recovery_period_from">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="id_recovery_period_to">Recovery period to:</label>
+        <input type="date" name="recovery_period_to" required id="id_recovery_period_to">
+      </div>  
+      <div class="form-group col-md-4">
+        <label for="id_recovery_date">Recovery date:</label>
+        <input type="date" name="recovery_date" required id="id_recovery_date">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group col-md-4">
+        <label for="id_no_of_days">No of days:</label>
+        <input type="number" name="no_of_days" min="-9223372036854775808" max="9223372036854775807" required id="id_no_of_days">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="id_new_outstanding_amt">New outstanding amt:</label>
+        <input type="number" name="new_outstanding_amt" min="-9223372036854775808" max="9223372036854775807" required id="id_new_outstanding_amt">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="id_principal_received">Principal received:</label>
+        <input type="number" name="principal_received" min="-9223372036854775808" max="9223372036854775807" required id="id_principal_received">
+      </div>
+    </div>
+    <div class="form-group">
+      <div class="form-group col-md-4">
+        <label for="id_interest_received">Interest received:</label>
+        <input type="number" name="interest_received" step="any" required id="id_interest_received">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="id_interest1">Interest1:</label>
+        <input type="number" name="interest1" step="any" required id="id_interest1">
+      </div>
+      <div class="form-group col-md-4">
+        <label for="id_intreset2">Intreset2:</label>
+        <input type="number" name="intreset2" step="any" required id="id_intreset2">
+      </div>
+    </div>
+    <button type="submit">Submit</button>
+</body>
+  
+    <script>
+        // JavaScript to handle the dynamic update of group_name dropdown based on selected society_name
+        document.getElementById("id_society_name").addEventListener("change", function () {
+            var society_name = this.value;
+            var url = `/get_group_names_society/${society_name}/`;
+  
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    var group_nameSelect = document.getElementById("id_group_name");
+                    group_nameSelect.innerHTML = ""; // Clear existing options
+  
+                    data.forEach(group => {
+                        var option = document.createElement("option");
+                        option.value = group;
+                        option.textContent = group;
+                        group_nameSelect.appendChild(option);
+                    });
+                })
+                .catch(error => console.error(error));
+        });
+    </script>
+  
+  
+  </form>
+  {% endblock %}

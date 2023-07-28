@@ -1,0 +1,366 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SHG Details Society Form</title>
+    
+  <style>
+      /* CSS code for the popup styling */
+      .popup {
+          position: fixed;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          padding: 20px;
+          background-color: #f2f2f2;
+          border: 1px solid #ccc;
+          box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+          z-index: 9999;
+          display: none; /* Initially hide the popup */
+      }
+      .popup.show {
+          display: block; /* Show the popup */
+      }
+      
+  </style>
+
+<style>
+  /* CSS for the form and table */
+  h1 {
+      font-size: 24px;
+      margin-bottom: 40px;
+      margin-left: 15px;
+      margin-top: 35px;
+      text-align: center;
+  }
+
+  form {
+      width: 1500px;
+      margin-top: 50px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+  }
+
+  .form-group {
+      display: flex;
+      flex-wrap: wrap;
+      margin-bottom: 15px;
+  }
+
+  .form-group > .form-group {
+      width: calc(33.33% - 25px); /* Adjust the width to fit three labels per line */
+      margin-right: 25px;
+  }
+
+  label {
+      display: block;
+      margin-bottom: 10px;
+      margin-left: 30px;
+      font-size: 22px;
+      text-align: center;
+  }
+
+  input,
+  select {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 1px solid #940c0c;
+      border-radius: 4px;
+      box-sizing: border-box;
+      margin-left: 30px;
+      font-size: 20px;
+      text-align: center;
+  }
+
+  .select-wrapper {
+      position: relative;
+  }
+
+  .select-wrapper select {
+      appearance: none;
+      -webkit-appearance: none;
+      -moz-appearance: none;
+      width: 100%;
+      height: 100%;
+      cursor: pointer;
+  }
+
+  .select-wrapper::after {
+      content: "\25BC";
+      position: absolute;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      pointer-events: none;
+  }
+
+  .text-danger {
+      color: red;
+  }
+
+  button[type="submit" ] {
+      width: 100%;
+      padding: 10px;
+      background-color: #4CAF50;
+      color: white;
+      cursor: pointer;
+      font-size: 20px;
+      text-align: center;
+      margin: 0 auto; /* Add this to center the button horizontally */
+      display: block; /* Add this to make the button behave as a block element */
+  }
+
+  button[type="submit"]:hover {
+      background-color: #4f55d1;
+  }
+
+  /* Style for the dropdown menu for group name */
+
+    .form-group .dropdown-content {
+        width: 100%;
+        max-height: 200px;
+        overflow-y: auto;
+        background-color: #fff;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 0;
+        z-index: 1;
+        display: none;
+        position: relative;
+        top: 0;
+        left: 0;
+    }
+
+    .form-group .dropdown-content li {
+        padding: 8px 12px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+    }
+
+    .form-group .dropdown-content li:hover {
+        background-color: #f5f5f5;
+    }
+
+    .form-group .dropdown-content.show {
+        display: block;
+        position: absolute;
+        top: 100%;
+        left: 0;
+    }
+
+    .form-group .error {
+        color: red;
+        font-size: 16px;
+        margin-top: 5px;
+        text-align: center;
+    }
+
+
+  
+ 
+</style>
+
+</head>
+<body>
+    <h1>SHG Details Society Form</h1>
+    <form method="POST" >
+        {% csrf_token %}
+        <div class="form-group">
+          <div class="form-group col-md-4">
+            <label for="id_type">Type:</label>
+            <input type="text"  value="SHG" name="type" maxlength="255" required id="id_type" readonly>
+          </div>
+          <div class="form-group col-md-4">
+            <label for="id_ac_open_through">Ac open through:</label>
+            <input type="text" name="ac_open_through" value="Society" maxlength="255" required id="id_ac_open_through" readonly>
+          </div>
+          <!--
+          <p>
+            <label for="id_sycode">Sycode:</label>
+            <input type="number" name="sycode" min="-9223372036854775808" max="9223372036854775807" required id="id_sycode" onchange="fetchSocietyName(this.value)">
+        </p>
+        -->
+        <div class="form-group col-md-4">
+          <label for="id_society_name">Society name:</label>
+          {{ form.societyname }}
+          {{ form.societyname.errors }}   
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-group col-md-4">
+            <label for="id_taluka">Taluka:</label>
+            <input type="text" name="taluka" maxlength="255" required id="id_taluka">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="id_group_no">Group no:</label>
+            {{ form.group_no }}
+        </div>
+        <div class="form-group col-md-4">
+          <label for="id_group_name">Group name:</label>
+              <!-- Change the input field to correctly render the groupname field -->
+              <input type="text" name="group_name" id="id_group_name" maxlength="1000" required>
+              <div id="group-name-suggestions" class="dropdown-content" readonly></div>
+          <span id="group-name-error" class="error"></span>
+      </div>
+      
+      
+      </div>
+      <div class="form-group">
+        <div class="form-group col-md-4">
+            <label for="id_date">Date:</label>
+            <input type="date" name="date" required id="id_date">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="id_group_type">Group type:</label>
+            <input type="text" name="group_type" maxlength="255" required id="id_group_type">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="id_No_of_members">No of members:</label>
+            <input type="number" name="No_of_members" min="-9223372036854775808" max="9223372036854775807" required id="id_No_of_members">
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-group col-md-4">
+            <label for="id_of_which_sc">Of which sc:</label>
+            <input type="number" name="of_which_sc" min="-9223372036854775808" max="9223372036854775807" required id="id_of_which_sc"> 
+        </div>
+        <div class="form-group col-md-4">
+            <label for="id_of_which_st">Of which st:</label>
+            <input type="number" name="of_which_st" min="-9223372036854775808" max="9223372036854775807" required id="id_of_which_st">
+        </div>
+        <div class="form-group col-md-4">
+            <label for="id_total_savings">Total savings:</label>
+            <input type="number" name="total_savings" min="-9223372036854775808" max="9223372036854775807" required id="id_total_savings"> 
+        </div>
+      </div>
+      <div class="form-group">
+        <div class="form-group col-md-4">
+            <label for="id_balance">Balance:</label>
+            <input type="number" name="balance" min="-9223372036854775808" max="9223372036854775807" required id="id_balance">            
+        </div>
+      </div>
+        
+        <button type="submit">Submit</button>
+    </form>
+</body>
+
+
+<script>
+  // JavaScript code to handle real-time search and display dropdown suggestions with debouncing
+  document.addEventListener("DOMContentLoaded", function() {
+    const groupNameInput = document.getElementById("id_group_name");
+    const suggestionsContainer = document.getElementById("group-name-suggestions");
+    let debounceTimeout;
+
+    function fetchSuggestions(searchQuery) {
+      // Send an AJAX request to retrieve the matched group names
+      const xhr = new XMLHttpRequest();
+      xhr.open("GET", `/get_group_society_names/?search_query=${encodeURIComponent(searchQuery)}`, true);
+
+      xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+          const response = JSON.parse(xhr.responseText);
+          const suggestions = response.suggestions;
+
+          suggestionsContainer.innerHTML = ""; // Clear previous suggestions
+          if (suggestions.length > 0) {
+            // Dynamically generate the dropdown-like pattern
+            suggestionsContainer.innerHTML = suggestions.map((suggestion) => `<div class="suggestion-item">${suggestion}</div>`).join("");
+          } else {
+            suggestionsContainer.innerHTML = "No suggestions found.";
+          }
+        }
+      };
+
+      xhr.send();
+    }
+
+    function debounce(func, delay) {
+      clearTimeout(debounceTimeout);
+      debounceTimeout = setTimeout(func, delay);
+    }
+
+    groupNameInput.addEventListener("input", function() {
+      const searchQuery = this.value.trim();
+      if (searchQuery === "") {
+        suggestionsContainer.innerHTML = "";
+        return;
+      }
+
+      // Debounce the fetchSuggestions function to reduce the frequency of AJAX requests
+      debounce(() => fetchSuggestions(searchQuery), 500);
+    });
+
+    // Always show the suggestions container
+    suggestionsContainer.style.display = "block";
+
+    // Handle click on a suggestion item and populate the input field
+    //suggestionsContainer.addEventListener("click", function(event) {
+      //const target = event.target;
+      //if (target.classList.contains("suggestion-item")) {
+        //groupNameInput.value = target.textContent;
+        //suggestionsContainer.innerHTML = "";
+      //}
+    //});
+
+    // Handle click outside of the dropdown container to clear suggestions
+    document.addEventListener("click", function(event) {
+      const target = event.target;
+      if (!suggestionsContainer.contains(target) && target !== groupNameInput) {
+        suggestionsContainer.innerHTML = "";
+      }
+    });
+  });
+</script>
+
+
+
+
+<script>
+  // JavaScript code to display and close the popup message
+  document.addEventListener('DOMContentLoaded', function() {
+    var popup = document.querySelector('.popup');
+
+    // Show the popup
+    function showPopup() {
+      popup.classList.add('show');
+    }
+
+    // Hide the popup
+    function hidePopup() {
+      popup.classList.remove('show');
+    }
+
+    // Close the popup automatically after 2 seconds
+    setTimeout(hidePopup, 2000);
+
+    // Close the popup when clicked elsewhere on the page
+    document.addEventListener('click', function(event) {
+      var targetElement = event.target;
+      if (!popup.contains(targetElement)) {
+        hidePopup();
+      }
+    });
+
+    // Show the popup initially
+    showPopup();
+  });
+</script>
+
+{% if messages %}
+  <!-- Display messages in the popup -->
+  <div class="popup show">
+    {% for message in messages %}
+      <p>{{ message }}</p>
+    {% endfor %}
+  </div>
+{% endif %}
+<!-- End of the popup message menu -->
+
+</html>
+{% endblock %}

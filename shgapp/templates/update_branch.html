@@ -1,0 +1,104 @@
+<!-- update_branch.html -->
+
+<h2>Update Branch</h2>
+
+<form method="post">
+  {% csrf_token %}
+  <p>
+    <label for="id_branchcode">Branchcode:</label>
+    <input type="number" name="branchcode" value="{{ form.instance.branchcode }}" min="-9223372036854775808" max="9223372036854775807" required id="id_branchcode">
+</p>
+<p>
+    <label for="id_branchname">Branchname:</label>
+    <input type="text" name="branchname" value="{{ form.instance.branchname }}" maxlength="255" required id="id_branchname">
+</p>
+<p>
+    <label for="id_br_manager">Br manager:</label>
+    <input type="text" name="br_manager" value="{{ form.instance.br_manager }}" maxlength="255" required id="id_br_manager">
+</p>
+<p>
+    <label for="id_address">Address:</label>
+    <input type="text" name="address" value="{{ form.instance.address }}" maxlength="255" required id="id_address">
+</p>
+<p>
+    <label for="id_place">Place:</label>
+    <input type="text" name="place" value="{{ form.instance.place }}" maxlength="255" required id="id_place">
+</p>
+<p>
+    <label for="id_phone">Phone:</label>
+    <input type="number" name="phone" value="{{ form.instance.phone }}" min="-9223372036854775808" max="9223372036854775807" required id="id_phone">
+</p>
+<p>
+    <label for="id_taluka">Taluka:</label>
+    <input type="text" name="taluka" value="{{ form.instance.taluka }}" maxlength="255" required id="id_taluka">
+</p>
+<p>
+    <label for="id_district">District:</label>
+    <input type="text" name="district" value="{{ form.instance.district }}" maxlength="255" required id="id_district">
+</p>
+<button type="submit">Update</button>
+</form>
+
+
+
+
+    <!-- code for the popup menu message start -->
+<style>
+    /* CSS code for the popup styling */
+    .popup {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        padding: 20px;
+        background-color: #f2f2f2;
+        border: 1px solid #ccc;
+        box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+        z-index: 9999;
+        display: none; /* Initially hide the popup */
+    }
+    .popup.show {
+        display: block; /* Show the popup */
+    }
+</style>
+
+<script>
+    // JavaScript code to display and close the popup message
+    document.addEventListener('DOMContentLoaded', function() {
+        var popup = document.querySelector('.popup');
+
+        // Show the popup
+        function showPopup() {
+            popup.classList.add('show');
+        }
+
+        // Hide the popup
+        function hidePopup() {
+            popup.classList.remove('show');
+        }
+
+        // Close the popup automatically after 2 seconds
+        setTimeout(hidePopup, 2000);
+
+        // Close the popup when clicked elsewhere on the page
+        document.addEventListener('click', function(event) {
+            var targetElement = event.target;
+            if (!popup.contains(targetElement)) {
+                hidePopup();
+            }
+        });
+
+        // Show the popup initially
+        showPopup();
+    });
+</script>
+
+  {% if messages %}
+  <!-- Loop through each message and display them in a popup -->
+  {% for message in messages %}
+  <div class="popup show">
+      {{ message }}
+  </div>
+  {% endfor %}
+  {% endif %}
+<!--end of the popup message menu -->

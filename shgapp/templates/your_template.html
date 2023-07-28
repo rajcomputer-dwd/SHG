@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SHG Transaction Form</title>
+</head>
+<body>
+    <h1>SHG Transaction Form</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <label for="branchname">Select Branch:</label>
+        <select name="branchname" id="branchname">
+            <option value="">---------</option>
+            {% for branch in branches %}
+                <option value="{{ branch.branchname }}">{{ branch.branchname }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="groupname">Select Group:</label>
+        <select name="groupname" id="groupname">
+            <option value="">---------</option>
+            {% for group in shg_groups %}
+                <option value="{{ group }}">{{ group }}</option>
+            {% endfor %}
+        </select>
+
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Website Title</title>
+    <!-- Add your common CSS and JavaScript files here -->
+</head>
+<body>
+    <!-- Include the header HTML file -->
+    {% include 'header.html' %}
+
+    <!-- Content specific to each page -->
+    {% block content %}
+    {% endblock %}
+
+    <!-- Include the footer HTML file -->
+    {% include 'footer.html' %}
+</body>
+</html>
